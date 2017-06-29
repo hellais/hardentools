@@ -61,19 +61,21 @@ func mark_status(hardened bool) {
 }
 
 func harden_all() {
-	trigger_all(true)
+	/*trigger_all(true)
 	mark_status(true)
-
+	*/
 	walk.MsgBox(window, "Done!", "I have hardened all risky features!\nFor all changes to take effect please restart Windows.", walk.MsgBoxIconInformation)
 	os.Exit(0)
 }
 
 func restore_all() {
+	/*
 	trigger_all(false)
 	mark_status(false)
+	*/
 
 	walk.MsgBox(window, "Done!", "I have restored all risky features!\nFor all changes to take effect please restart Windows.", walk.MsgBoxIconExclamation)
-	os.Exit(0)  
+	os.Exit(0)
 }
 
 func trigger_all(harden bool) {
@@ -91,6 +93,23 @@ func trigger_all(harden bool) {
 }
 
 func main() {
+	var topBar *walk.Composite
+    var sideBar *walk.Composite
+    var mainArea *walk.Composite
+    var middleArea *walk.Composite
+
+	// XXX include this with something like gobindata
+	hardenLogo, _ := walk.NewBitmapFromFile("assets/hardenlogo.png")
+	// XXX YOLO errors
+	darkGrey, _ := walk.NewSolidColorBrush(walk.RGB(74, 74, 74))
+	lightGrey, _ := walk.NewSolidColorBrush(walk.RGB(155, 155, 155))
+	lighterGrey, _ := walk.NewSolidColorBrush(walk.RGB(216, 216, 216))
+
+	defer darkGrey.Dispose()
+	defer lightGrey.Dispose()
+	defer lighterGrey.Dispose()
+
+	/*
 	var label_text, button_text, events_text string
 	var button_func func()
 
@@ -103,13 +122,78 @@ func main() {
 		button_func = restore_all
 		label_text = "We have already hardened some risky features, do you want to restore them?"
 	}
+	*/
 
 	MainWindow{
 		AssignTo: &window,
 		Title: "Harden - Security Without Borders",
-		MinSize: Size{400, 300},
-		Layout: VBox{},
+		MinSize: Size{800, 500},
+		Layout: Grid{MarginsZero: true, SpacingZero: true, Rows: 2},
 		Children: []Widget{
+			Composite{
+				Row: 0,
+                AssignTo: &topBar,
+				Layout: Grid{MarginsZero: true, SpacingZero: true, Columns: 6},
+				MinSize: Size{Height: 85},
+				MaxSize: Size{Height: 85},
+                Children: []Widget{
+					ImageView{
+						// XXX this crap doesn't work
+						// Background: darkGrey,
+						Column: 0,
+						MaxSize: Size{Width: 64},
+						ColumnSpan: 1,
+						Image: hardenLogo,
+					},
+					Composite{
+						Column: 1,
+						ColumnSpan: 1,
+						Layout:   Grid{MarginsZero: true, SpacingZero: true, Rows: 2},
+						Children: []Widget{
+							Label{
+								Row: 0,
+								MaxSize: Size{Height: 40},
+								Text: "Harden",
+								Font: Font{PointSize: 24},
+							},
+							Label{
+								Row: 1,
+								MaxSize: Size{Height: 40},
+								Text: "v1.1.1",
+								Font: Font{PointSize: 16},
+							},
+						},
+					},
+					Label{
+						Column: 3,
+						Text: "Scan",
+						Font: Font{PointSize: 32},
+					},
+					HSpacer{
+						Column: 2,
+						ColumnSpan: 3,
+					},
+                },
+            },
+			Composite{
+				Row: 1,
+				AssignTo: &middleArea,
+				Layout: Grid{MarginsZero: true, SpacingZero: true, Columns: 6},
+                Children: []Widget{
+					Composite{
+						Column: 0,
+						AssignTo: &sideBar,
+						Layout:   VBox{MarginsZero: true},
+					},
+					Composite{
+						Column: 1,
+						ColumnSpan: 5,
+						AssignTo: &mainArea,
+						Layout:   VBox{MarginsZero: true},
+					},
+                },
+            },
+			/*
 			Label{Text: label_text},
 			PushButton{
 				Text: button_text,
@@ -123,8 +207,12 @@ func main() {
 				Text: events_text,
 				ReadOnly: true,
 			},
+			*/
 		},
 	}.Create()
+
+	topBar.SetBackground(darkGrey)
+	sideBar.SetBackground(lightGrey)
 
 	window.Run()
 }
