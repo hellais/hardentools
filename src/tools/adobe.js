@@ -1,28 +1,28 @@
 import regedit from 'regedit'
 
 const adobeVersions = [
-	"DC", // Acrobat Reader DC
-	"XI", // Acrobat Reader XI - To test
+  "DC", // Acrobat Reader DC
+  "XI", // Acrobat Reader XI - To test
 ]
 
 export default class Adobe {
 
-	constructor() {
-		this.onEvent = this.onEvent.bind(this)
-		this.onError = this.onError.bind(this)
-	}
+  constructor() {
+    this.onEvent = this.onEvent.bind(this)
+    this.onError = this.onError.bind(this)
+  }
 
-	onEvent(text) {
-		// XXX move this into the base class
-		console.log(text)
-	}
+  onEvent(text) {
+    // XXX move this into the base class
+    console.log(text)
+  }
 
-	onError(context, err) {
-		// XXX move this into the base class
-		console.log(context, err)
-	}
+  onError(context, err) {
+    // XXX move this into the base class
+    console.log(context, err)
+  }
 
-	triggerPdfObjects(harden, cb) {
+  triggerPdfObjects(harden, cb) {
     /*
     bAllowOpenFile set to 0 and
     bSecureOpenFile set to 1 to disable
@@ -30,33 +30,33 @@ export default class Adobe {
     */
 
     /*func trigger_pdf_objects(harden bool) {
-	var allow_value uint32
-	var secure_value uint32
+  var allow_value uint32
+  var secure_value uint32
 
-	if harden==false {
-		events.AppendText("Restoring default by enabling embedded objects in PDFs\n")
-		allow_value = 1
-		secure_value = 0
-	} else {
-		events.AppendText("Hardening by disabling embedded objects in PDFs\n")
-		allow_value = 0
-		secure_value = 1
-	}
+  if harden==false {
+    events.AppendText("Restoring default by enabling embedded objects in PDFs\n")
+    allow_value = 1
+    secure_value = 0
+  } else {
+    events.AppendText("Hardening by disabling embedded objects in PDFs\n")
+    allow_value = 0
+    secure_value = 1
+  }
 
-	for _, adobe_version := range adobe_versions {
-		path := fmt.Sprintf("SOFTWARE\\Adobe\\Acrobat Reader\\%s\\Originals", adobe_version)
-		key, _, _ := registry.CreateKey(registry.CURRENT_USER, path, registry.WRITE)
-		
-		key.SetDWordValue("bAllowOpenFile", allow_value)
-		key.SetDWordValue("bSecureOpenFile", secure_value)
-		key.Close()
-	}
+  for _, adobe_version := range adobe_versions {
+    path := fmt.Sprintf("SOFTWARE\\Adobe\\Acrobat Reader\\%s\\Originals", adobe_version)
+    key, _, _ := registry.CreateKey(registry.CURRENT_USER, path, registry.WRITE)
+
+    key.SetDWordValue("bAllowOpenFile", allow_value)
+    key.SetDWordValue("bSecureOpenFile", secure_value)
+    key.Close()
+  }
   }
   */
 
   }
 
-	triggerPdfJs(harden, cb) {
+  triggerPdfJs(harden, cb) {
     /*
     bEnableJS possible values:
     0 - Disable AcroJS
@@ -97,12 +97,12 @@ export default class Adobe {
     }
   }
 
-	run(cb) {
+  run(cb) {
     return triggerPdfJs(true, cb)
-	}
+  }
 
-	revert() {
+  revert() {
     return triggerPdfJs(false, cb)
-	}
+  }
 }
 
