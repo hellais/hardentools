@@ -1,0 +1,25 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.menu-items a {
+    text-decoration: none;
+    color: black;
+}
+
+.menu-items a .menu-item-container {
+    text-align: center;
+    background-color: #D8D8D8;
+    padding: 20px;
+}
+
+.menu-items a:hover .menu-item-container,
+.menu-items a.active .menu-item-container {
+    background-color: #75D8B2;
+}

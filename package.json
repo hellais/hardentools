@@ -1,0 +1,43 @@
+{
+  "name": "hardentools",
+  "productName": "Harden Tools",
+  "version": "0.1.0",
+  "description": "",
+  "license": "MIT",
+  "repository": "securitywithoutborders/hardentool",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "main": "main.js",
+  "scripts": {
+    "testDev": "electron .",
+    "testProd": "electron . --noDevServer",
+    "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
+    "build": "webpack --config webpack.build.config.js",
+    "package": "webpack --config webpack.build.config.js",
+    "postpackage": "electron-packager ./ --out=./builds --overwrite"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-react": "^6.24.1",
+    "babili-webpack-plugin": "0.0.11",
+    "css-loader": "^0.28.1",
+    "electron": "^1.6.11",
+    "electron-debug": "^1.0.0",
+    "electron-packager": "^8.7.0",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.28.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.4.2",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "regedit": "^2.2.7",
+    "style-loader": "^0.17.0",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
