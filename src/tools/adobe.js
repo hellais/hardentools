@@ -57,23 +57,23 @@ export default class Adobe {
   }
 
 	triggerPdfJs(harden, cb) {
-		/*
-		bEnableJS possible values:
-		0 - Disable AcroJS
-		1 - Enable AcroJS
-		*/
-		let keyValue
+    /*
+    bEnableJS possible values:
+    0 - Disable AcroJS
+    1 - Enable AcroJS
+    */
+    let keyValue
 
-		if (harden === false) {
-			onEvent("Restoring default by enabling Acrobat Reader JavaScript")
-			keyValue = 1
-		} else {
-			onEvent("Hardening by disabling Acrobat Reader JavaScript")
-			keyValue = 0
-		}
-		
-		adobeVersions.forEach((adobeVersion) => {
-			let path = `SOFTWARE\Adobe\Acrobat Reader\${adobeVersion}\JSPrefs`
+    if (harden === false) {
+      onEvent("Restoring default by enabling Acrobat Reader JavaScript")
+      keyValue = 1
+    } else {
+      onEvent("Hardening by disabling Acrobat Reader JavaScript")
+      keyValue = 0
+    }
+
+    adobeVersions.forEach((adobeVersion) => {
+      let path = `SOFTWARE\Adobe\Acrobat Reader\${adobeVersion}\JSPrefs`
       regedit.createKey(path, (err) => {
         if (err) {
           onError({'module': 'adobe', 'what': 'createKey'}, err)
@@ -94,8 +94,8 @@ export default class Adobe {
           })
         }
       })
-		}
-	}
+    }
+  }
 
 	run(cb) {
     return triggerPdfJs(true, cb)
